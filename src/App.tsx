@@ -24,10 +24,10 @@ class App extends Component {
   handleSearch = (search: string) => this.setState({ search })
 
   componentDidMount() {
-    this.fetchUsers()
+    this.fetchData()
   }
 
-  fetchUsers = async () => {
+  fetchData = async () => {
     try {
       const response = await fetch(URL)
       const { results }: ResultType = await response.json()
@@ -40,7 +40,11 @@ class App extends Component {
   render() {
     return (
       <>
-        <Search search={this.state.search} onChange={this.handleSearch} />
+        <Search
+          search={this.state.search}
+          onChange={this.handleSearch}
+          isLoading={this.state.loading}
+        />
         <People people={this.state.people} />
       </>
     )
