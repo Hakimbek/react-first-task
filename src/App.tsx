@@ -41,7 +41,11 @@ class App extends Component {
 
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    this.fetchPeople()
+    if (this.state.page === 1) {
+      this.fetchPeople()
+    } else {
+      this.setState({ page: 1 })
+    }
   }
 
   handleSearch = (search: string) => this.setState({ search })
@@ -84,6 +88,7 @@ class App extends Component {
           page={this.state.page}
           onNext={this.handleNext}
           onPrev={this.handlePrev}
+          isLoading={this.state.loading}
         />
       </>
     )
