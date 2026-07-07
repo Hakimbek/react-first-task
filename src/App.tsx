@@ -33,6 +33,12 @@ class App extends Component {
     this.fetchPeople()
   }
 
+  componentDidUpdate = (_prevProps: unknown, prevState: State) => {
+    if (prevState.page !== this.state.page) {
+      this.fetchPeople()
+    }
+  }
+
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     this.fetchPeople()
