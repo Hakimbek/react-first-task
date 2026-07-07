@@ -5,6 +5,7 @@ type SearchProps = {
   search: string
   onChange: (search: string) => void
   isLoading: boolean
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 export class Search extends Component<SearchProps> {
@@ -13,7 +14,7 @@ export class Search extends Component<SearchProps> {
       <div className="container-fluid py-4 bg-light border-bottom">
         <div className="row">
           <div className="col-5">
-            <form className="d-flex gap-2 w-50">
+            <form className="d-flex gap-2 w-50" onSubmit={this.props.onSubmit}>
               <input
                 id="search"
                 type="search"
@@ -23,6 +24,7 @@ export class Search extends Component<SearchProps> {
                 placeholder="Search..."
               />
               <button
+                type="submit"
                 className="btn btn-primary d-flex align-items-center gap-2"
                 disabled={this.props.isLoading}
               >

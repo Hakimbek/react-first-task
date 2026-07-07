@@ -3,8 +3,9 @@ import { People } from './components/People.tsx'
 import type { PersonType } from './components/Person.tsx'
 import type { ResultType } from './type.ts'
 import { Component } from 'react'
+import { getPeople } from './serices/getPeople.ts'
 
-const URL = 'https://swapi.dev/api/people'
+export const URL = 'https://swapi.dev/api/people'
 
 type State = {
   search: string
@@ -21,16 +22,22 @@ class App extends Component {
     error: null,
   }
 
-  handleSearch = (search: string) => this.setState({ search })
-
-  componentDidMount() {
-    this.fetchData()
+  componentDidMount = async () => {
+    this.fetchPeople()
   }
 
-  fetchData = async () => {
+  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    this.fetchPeople()
+  }
+
+  handleSearch = (search: string) => this.setState({ search })
+
+  fetchPeople = async () => {
+    this.setState({ loading: true, error: null })
     try {
-      const response = await fetch(URL)
-      const { results }: ResultType = await response.json()
+      const params = new URLSearchParams({ search: this.state.search })
+      const { results } = await getPeople<ResultType>(`${URL}/?${params}`)
       this.setState({ people: results, loading: false })
     } catch {
       this.setState({ error: 'Something went wrong', loading: false })
@@ -44,6 +51,7 @@ class App extends Component {
           search={this.state.search}
           onChange={this.handleSearch}
           isLoading={this.state.loading}
+          onSubmit={this.handleSubmit}
         />
         <People people={this.state.people} />
       </>

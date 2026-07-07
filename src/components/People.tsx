@@ -38,6 +38,7 @@ export class People extends Component<PeopleProps> {
                     gender,
                   }) => (
                     <Person
+                      key={name}
                       name={name}
                       height={height}
                       mass={mass}
