@@ -12,7 +12,7 @@ type NavigationProps = {
 export class Navigation extends Component<NavigationProps> {
   render() {
     return (
-      <div className="d-flex d-flex gap-3">
+      <div className="container-fluid d-flex gap-3 justify-content-center position-absolute bottom-0 py-3 bg-light border-top">
         <button
           disabled={!this.props.previous || this.props.isLoading}
           className="btn btn-primary"
