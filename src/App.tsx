@@ -83,6 +83,8 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.error) throw new Error(this.state.error)
+
     return (
       <>
         <Search
