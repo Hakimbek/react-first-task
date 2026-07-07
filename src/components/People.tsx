@@ -13,7 +13,7 @@ export class People extends Component<PeopleProps> {
         <div className="row">
           <div className="col">
             <table className="table table-bordered">
-              <thead>
+              <thead className="table-light">
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">Height</th>

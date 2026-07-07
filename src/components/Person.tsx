@@ -15,7 +15,7 @@ export class Person extends Component<PersonType> {
   render() {
     return (
       <tr>
-        <td>{this.props.name}</td>
+        <th>{this.props.name}</th>
         <td>{this.props.height}</td>
         <td>{this.props.mass}</td>
         <td>{this.props.hair_color}</td>

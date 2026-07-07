@@ -18,9 +18,13 @@ type State = {
   page: number
 }
 
+const savedSearch = localStorage.getItem('search') ?? ''
+
 class App extends Component {
+  lastSearch: string = savedSearch
+
   state: State = {
-    search: localStorage.getItem('search') ?? '',
+    search: savedSearch,
     people: [],
     loading: true,
     error: null,
@@ -41,6 +45,11 @@ class App extends Component {
 
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (this.state.search === this.lastSearch) return
+
+    this.lastSearch = this.state.search
+
     if (this.state.page === 1) {
       this.fetchPeople()
     } else {
