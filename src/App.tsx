@@ -57,7 +57,7 @@ class App extends Component {
     }
   }
 
-  handleSearch = (search: string) => this.setState({ search })
+  handleSearch = (search: string) => this.setState({ search: search.trim() })
 
   handleNext = async () => {
     this.setState({ page: this.state.page + 1 })
