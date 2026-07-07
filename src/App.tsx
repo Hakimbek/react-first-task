@@ -67,6 +67,8 @@ class App extends Component {
     this.setState({ page: this.state.page - 1 })
   }
 
+  handleError = () => this.setState({ error: 'Error' })
+
   fetchPeople = async () => {
     this.setState({ loading: true, error: null })
     localStorage.setItem('search', this.state.search)
@@ -89,9 +91,10 @@ class App extends Component {
       <>
         <Search
           search={this.state.search}
-          onChange={this.handleSearch}
           isLoading={this.state.loading}
           onSubmit={this.handleSubmit}
+          onChange={this.handleSearch}
+          onError={this.handleError}
         />
         <People people={this.state.people} />
         <Navigation
