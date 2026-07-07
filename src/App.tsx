@@ -20,7 +20,7 @@ type State = {
 
 class App extends Component {
   state: State = {
-    search: '',
+    search: localStorage.getItem('search') ?? '',
     people: [],
     loading: true,
     error: null,
@@ -60,6 +60,7 @@ class App extends Component {
 
   fetchPeople = async () => {
     this.setState({ loading: true, error: null })
+    localStorage.setItem('search', this.state.search)
     try {
       const params = new URLSearchParams({
         search: this.state.search,
