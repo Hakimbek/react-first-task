@@ -1,5 +1,5 @@
 import { Component, type ReactNode } from 'react'
-import { Error } from './Error.tsx'
+import { Error } from './error/Error.tsx'
 
 type Props = {
   children: ReactNode
