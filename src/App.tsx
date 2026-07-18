@@ -1,5 +1,5 @@
 import { Search } from './components/search/Search.tsx'
-import { People } from './components/People.tsx'
+import { People } from './components/people/People.tsx'
 import type { PersonType } from './components/person/Person.tsx'
 import { Navigation } from './components/navigation/Navigation.tsx'
 import type { ResultType } from './type.ts'

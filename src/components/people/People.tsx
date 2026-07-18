@@ -1,6 +1,6 @@
 import { Component } from 'react'
-import { Person } from './person/Person.tsx'
-import type { PersonType } from './person/Person.tsx'
+import { Person } from '../person/Person.tsx'
+import type { PersonType } from '../person/Person.tsx'
 
 type PeopleProps = {
   people: PersonType[]
