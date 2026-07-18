@@ -1,10 +1,10 @@
-import { Search } from './components/Search.tsx'
+import { Search } from './components/search/Search.tsx'
 import { People } from './components/People.tsx'
 import type { PersonType } from './components/Person.tsx'
 import { Navigation } from './components/Navigation.tsx'
 import type { ResultType } from './type.ts'
 import { Component } from 'react'
-import { getPeople } from './serices/getPeople.ts'
+import { getPeople } from './services/getPeople.ts'
 
 export const URL = 'https://swapi.dev/api/people'
 
