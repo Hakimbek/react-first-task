@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { Person, PersonType } from './Person'
+import { Person, type PersonType } from './Person'
 
 const mockPerson: PersonType = {
   name: 'Luke Skywalker',
