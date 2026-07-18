@@ -1,7 +1,7 @@
 import { Search } from './components/search/Search.tsx'
 import { People } from './components/People.tsx'
 import type { PersonType } from './components/Person.tsx'
-import { Navigation } from './components/Navigation.tsx'
+import { Navigation } from './components/navigation/Navigation.tsx'
 import type { ResultType } from './type.ts'
 import { Component } from 'react'
 import { getPeople } from './services/getPeople.ts'
