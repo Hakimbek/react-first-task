@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Spinner } from '../Spinner.tsx'
+import { Spinner } from '../spinner/Spinner.tsx'
 
 type SearchProps = {
   search: string
