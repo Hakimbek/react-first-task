@@ -3,111 +3,95 @@ import { People } from './components/people/People.tsx'
 import type { PersonType } from './components/person/Person.tsx'
 import { Navigation } from './components/navigation/Navigation.tsx'
 import type { ResultType } from './type.ts'
-import { Component } from 'react'
 import { getPeople } from './services/getPeople.ts'
+import { useState, useEffect } from 'react'
 
 export const URL = 'https://swapi.dev/api/people'
 
-type State = {
+const savedSearch = localStorage.getItem('search') ?? ''
+
+type Query = {
   search: string
-  people: PersonType[]
-  loading: boolean
-  error: null | string
-  next: null | string
-  previous: null | string
   page: number
 }
 
-const savedSearch = localStorage.getItem('search') ?? ''
+export const App = () => {
+  const [searchInput, setSearchInput] = useState<string>(savedSearch)
+  const [query, setQuery] = useState<Query>({ search: savedSearch, page: 1 })
+  const [people, setPeople] = useState<PersonType[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<null | string>(null)
+  const [next, setNext] = useState<null | string>(null)
+  const [previous, setPrevious] = useState<null | string>(null)
 
-class App extends Component {
-  lastSearch: string = savedSearch
+  useEffect(() => {
+    const fetchPeople = async (search: string, page: number) => {
+      setLoading(true)
+      setError(null)
 
-  state: State = {
-    search: savedSearch,
-    people: [],
-    loading: true,
-    error: null,
-    next: null,
-    previous: null,
-    page: 1,
-  }
+      localStorage.setItem('search', search)
 
-  componentDidMount = async () => {
-    this.fetchPeople()
-  }
-
-  componentDidUpdate = (_prevProps: unknown, prevState: State) => {
-    if (prevState.page !== this.state.page) {
-      this.fetchPeople()
+      try {
+        const params = new URLSearchParams({
+          search,
+          page: String(page),
+        })
+        const { results, next, previous } = await getPeople<ResultType>(`${URL}/?${params}`)
+        setPeople(results)
+        setNext(next)
+        setPrevious(previous)
+      } catch {
+        setError('Something went wrong')
+      } finally {
+        setLoading(false)
+      }
     }
-  }
 
-  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    fetchPeople(query.search, query.page)
+  }, [query])
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (this.state.search === this.lastSearch) return
+    if (searchInput === query.search) return
 
-    this.lastSearch = this.state.search
-
-    if (this.state.page === 1) {
-      this.fetchPeople()
-    } else {
-      this.setState({ page: 1 })
-    }
+    setQuery({ search: searchInput, page: 1 })
   }
 
-  handleSearch = (search: string) => this.setState({ search: search.trim() })
+  const handleSearch = (search: string) => setSearchInput(search.trim())
 
-  handleNext = async () => {
-    this.setState({ page: this.state.page + 1 })
+  const handleNext = () => {
+    setQuery((q) => ({ ...q, page: q.page + 1 }))
   }
 
-  handlePrev = async () => {
-    this.setState({ page: this.state.page - 1 })
+  const handlePrev = () => {
+    setQuery((q) => ({ ...q, page: q.page - 1 }))
   }
 
-  handleError = () => this.setState({ error: 'Error' })
+  const handleError = () => setError('Error')
 
-  fetchPeople = async () => {
-    this.setState({ loading: true, error: null })
-    localStorage.setItem('search', this.state.search)
-    try {
-      const params = new URLSearchParams({
-        search: this.state.search,
-        page: String(this.state.page),
-      })
-      const { results, next, previous } = await getPeople<ResultType>(`${URL}/?${params}`)
-      this.setState({ people: results, loading: false, next, previous })
-    } catch {
-      this.setState({ error: 'Something went wrong', loading: false })
-    }
-  }
+  if (error) throw new Error(error)
 
-  render() {
-    if (this.state.error) throw new Error(this.state.error)
-
-    return (
-      <>
-        <Search
-          search={this.state.search}
-          isLoading={this.state.loading}
-          onSubmit={this.handleSubmit}
-          onChange={this.handleSearch}
-          onError={this.handleError}
-        />
-        <People people={this.state.people} />
-        <Navigation
-          next={this.state.next}
-          previous={this.state.previous}
-          page={this.state.page}
-          onNext={this.handleNext}
-          onPrev={this.handlePrev}
-          isLoading={this.state.loading}
-        />
-      </>
-    )
-  }
+  return (
+    <>
+      <Search
+        search={searchInput}
+        isLoading={loading}
+        onSubmit={handleSubmit}
+        onChange={handleSearch}
+        onError={handleError}
+      />
+      <People people={people} />
+      <Navigation
+        next={next}
+        previous={previous}
+        page={query.page}
+        onNext={handleNext}
+        onPrev={handlePrev}
+        isLoading={loading}
+      />
+    </>
+  )
 }
 
 export default App
