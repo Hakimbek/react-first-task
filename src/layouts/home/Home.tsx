@@ -5,19 +5,17 @@ import { Navigation } from '../../components/navigation/Navigation.tsx'
 import type { ResultType } from '../../type.ts'
 import { getPeople } from '../../services/getPeople.ts'
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 export const URL = 'https://swapi.dev/api/people'
 
-const savedSearch = localStorage.getItem('search') ?? ''
-
-type Query = {
-  search: string
-  page: number
-}
-
 export const Home = () => {
-  const [searchInput, setSearchInput] = useState<string>(savedSearch)
-  const [query, setQuery] = useState<Query>({ search: savedSearch, page: 1 })
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const search = searchParams.get('search') ?? localStorage.getItem('search') ?? ''
+  const page = Number(searchParams.get('page') ?? 1)
+
+  const [searchInput, setSearchInput] = useState<string>(search)
   const [people, setPeople] = useState<PersonType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<null | string>(null)
@@ -25,7 +23,7 @@ export const Home = () => {
   const [previous, setPrevious] = useState<null | string>(null)
 
   useEffect(() => {
-    const fetchPeople = async (search: string, page: number) => {
+    const fetchPeople = async () => {
       setLoading(true)
       setError(null)
 
@@ -47,25 +45,25 @@ export const Home = () => {
       }
     }
 
-    fetchPeople(query.search, query.page)
-  }, [query])
+    fetchPeople()
+  }, [search, page])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (searchInput === query.search) return
+    if (searchInput === search) return
 
-    setQuery({ search: searchInput, page: 1 })
+    setSearchParams({ search: searchInput, page: '1' })
   }
 
-  const handleSearch = (search: string) => setSearchInput(search.trim())
+  const handleSearch = (value: string) => setSearchInput(value.trim())
 
   const handleNext = () => {
-    setQuery((q) => ({ ...q, page: q.page + 1 }))
+    setSearchParams({ search, page: String(page + 1) })
   }
 
   const handlePrev = () => {
-    setQuery((q) => ({ ...q, page: q.page - 1 }))
+    setSearchParams({ search, page: String(page - 1) })
   }
 
   const handleError = () => setError('Error')
@@ -85,7 +83,7 @@ export const Home = () => {
       <Navigation
         next={next}
         previous={previous}
-        page={query.page}
+        page={page}
         onNext={handleNext}
         onPrev={handlePrev}
         isLoading={loading}
