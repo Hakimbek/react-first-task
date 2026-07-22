@@ -24,21 +24,9 @@ export const People = ({ people }: PeopleProps) => {
               </tr>
             </thead>
             <tbody>
-              {people.map(
-                ({ name, height, mass, hair_color, skin_color, eye_color, birth_year, gender }) => (
-                  <Person
-                    key={name}
-                    name={name}
-                    height={height}
-                    mass={mass}
-                    hair_color={hair_color}
-                    skin_color={skin_color}
-                    eye_color={eye_color}
-                    birth_year={birth_year}
-                    gender={gender}
-                  />
-                ),
-              )}
+              {people.map((person) => (
+                <Person key={person.name} {...person} />
+              ))}
             </tbody>
           </table>
         </div>

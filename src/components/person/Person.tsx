@@ -1,3 +1,5 @@
+import { Link, useSearchParams } from 'react-router-dom'
+
 export type PersonType = {
   name: string
   height: string
@@ -7,6 +9,7 @@ export type PersonType = {
   eye_color: string
   birth_year: string
   gender: string
+  url: string
 }
 
 export const Person = ({
@@ -18,10 +21,16 @@ export const Person = ({
   eye_color,
   birth_year,
   gender,
+  url,
 }: PersonType) => {
+  const [searchParams] = useSearchParams()
+  const id = url.split('/').filter(Boolean).pop()
+
   return (
     <tr>
-      <th>{name}</th>
+      <th>
+        <Link to={`/details/${id}?${searchParams}`}>{name}</Link>
+      </th>
       <td>{height}</td>
       <td>{mass}</td>
       <td>{hair_color}</td>

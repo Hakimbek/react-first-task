@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { Person, type PersonType } from './Person'
 
 const mockPerson: PersonType = {
@@ -10,15 +11,18 @@ const mockPerson: PersonType = {
   eye_color: 'blue',
   birth_year: '19BBY',
   gender: 'male',
+  url: 'https://swapi.dev/api/people/1/',
 }
 
 const renderPerson = (props: PersonType) =>
   render(
-    <table>
-      <tbody>
-        <Person {...props} />
-      </tbody>
-    </table>,
+    <MemoryRouter>
+      <table>
+        <tbody>
+          <Person {...props} />
+        </tbody>
+      </table>
+    </MemoryRouter>,
   )
 
 describe('Person', () => {

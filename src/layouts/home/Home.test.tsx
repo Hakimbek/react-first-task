@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 import { Home } from './Home.tsx'
 import { getPeople } from '../../services/getPeople'
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary'
@@ -20,6 +21,7 @@ const mockResponse = {
       eye_color: 'blue',
       birth_year: '19BBY',
       gender: 'male',
+      url: 'https://swapi.dev/api/people/1/',
     },
     {
       name: 'Darth Vader',
@@ -30,6 +32,7 @@ const mockResponse = {
       eye_color: 'yellow',
       birth_year: '41.9BBY',
       gender: 'male',
+      url: 'https://swapi.dev/api/people/4/',
     },
   ],
   next: 'https://swapi.dev/api/people/?page=2',
@@ -47,27 +50,43 @@ describe('App', () => {
   })
 
   it('renders search input, table, and navigation on mount', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     expect(screen.getByPlaceholderText('Search...')).toBeInTheDocument()
     await waitFor(() => expect(screen.getByRole('table')).toBeInTheDocument())
     expect(screen.getByText('1')).toBeInTheDocument()
   })
 
   it('fetches people on mount', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
     expect(mockGetPeople).toHaveBeenCalledWith(expect.stringContaining('swapi.dev'))
   })
 
   it('renders fetched people in the table', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
     expect(screen.getByText('Darth Vader')).toBeInTheDocument()
   })
 
   it('disables submit and navigation buttons while loading', () => {
     mockGetPeople.mockImplementation(() => new Promise(() => {}))
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     const [submitButton, , prevButton, nextButton] = screen.getAllByRole('button')
     expect(submitButton).toBeDisabled()
     expect(prevButton).toBeDisabled()
@@ -75,7 +94,11 @@ describe('App', () => {
   })
 
   it('enables next button when next page is available', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
     const buttons = screen.getAllByRole('button')
     const nextButton = buttons[buttons.length - 1]
@@ -83,7 +106,11 @@ describe('App', () => {
   })
 
   it('increments page and refetches when next is clicked', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
     const buttons = screen.getAllByRole('button')
     await userEvent.click(buttons[buttons.length - 1])
@@ -92,7 +119,11 @@ describe('App', () => {
   })
 
   it('does not refetch when submitting the same search', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
     const [submitButton] = screen.getAllByRole('button')
     await userEvent.click(submitButton)
@@ -100,7 +131,11 @@ describe('App', () => {
   })
 
   it('refetches when submitting a new search', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
     await userEvent.type(screen.getByRole('searchbox'), 'yoda')
     const [submitButton] = screen.getAllByRole('button')
@@ -110,7 +145,11 @@ describe('App', () => {
   })
 
   it('saves search to localStorage on fetch', async () => {
-    render(<Home />)
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
     expect(localStorage.getItem('search')).toBe('')
   })
@@ -119,9 +158,11 @@ describe('App', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {})
     mockGetPeople.mockRejectedValue(new Error('Network error'))
     render(
-      <ErrorBoundary>
-        <Home />
-      </ErrorBoundary>,
+      <MemoryRouter>
+        <ErrorBoundary>
+          <Home />
+        </ErrorBoundary>
+      </MemoryRouter>,
     )
     await waitFor(() => expect(screen.getByText('Something went wrong')).toBeInTheDocument())
     jest.restoreAllMocks()
@@ -130,9 +171,11 @@ describe('App', () => {
   it('shows error UI when Test Error button is clicked', async () => {
     jest.spyOn(console, 'error').mockImplementation(() => {})
     render(
-      <ErrorBoundary>
-        <Home />
-      </ErrorBoundary>,
+      <MemoryRouter>
+        <ErrorBoundary>
+          <Home />
+        </ErrorBoundary>
+      </MemoryRouter>,
     )
     await waitFor(() =>
       expect(screen.getByRole('button', { name: /test error/i })).toBeInTheDocument(),

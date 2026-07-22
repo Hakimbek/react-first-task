@@ -5,7 +5,7 @@ import { Navigation } from '../../components/navigation/Navigation.tsx'
 import type { ResultType } from '../../type.ts'
 import { getPeople } from '../../services/getPeople.ts'
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Outlet } from 'react-router-dom'
 
 export const URL = 'https://swapi.dev/api/people'
 
@@ -80,6 +80,7 @@ export const Home = () => {
         onError={handleError}
       />
       <People people={people} />
+      <Outlet />
       <Navigation
         next={next}
         previous={previous}

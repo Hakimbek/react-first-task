@@ -2,6 +2,7 @@ import { NavLink, Routes, Route } from 'react-router-dom'
 import { Home } from './layouts/home/Home.tsx'
 import { About } from './layouts/about/About.tsx'
 import { NotFound } from './layouts/not-found/NotFound.tsx'
+import { Details } from './layouts/details/Details.tsx'
 
 export const App = () => {
   return (
@@ -32,7 +33,9 @@ export const App = () => {
       </nav>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />}>
+          <Route path="details/:id" element={<Details />} />
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
