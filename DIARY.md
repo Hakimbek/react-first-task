@@ -11,3 +11,11 @@ The implementation is not difficult.
 ### 18.07.2026
 
 Configure jest and react testing library for unit testing.
+
+### 27.07.2026
+
+Convert almost all components to functional components.
+
+### 27.07.2026
+
+Converting the App component to a functional component was a bit tricky because it has a lot of logic and state management. I had to refactor some parts of the code to make it work properly.
