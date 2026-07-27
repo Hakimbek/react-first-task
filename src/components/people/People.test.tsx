@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { People } from './People'
 import type { PersonType } from '../person/Person'
 
@@ -12,6 +13,7 @@ const mockPeople: PersonType[] = [
     eye_color: 'blue',
     birth_year: '19BBY',
     gender: 'male',
+    url: '',
   },
   {
     name: 'Leia Organa',
@@ -22,12 +24,17 @@ const mockPeople: PersonType[] = [
     eye_color: 'brown',
     birth_year: '19BBY',
     gender: 'female',
+    url: '',
   },
 ]
 
 describe('People', () => {
   it('renders all column headers', () => {
-    render(<People people={[]} />)
+    render(
+      <MemoryRouter>
+        <People people={[]} />
+      </MemoryRouter>,
+    )
     const headers = [
       'Name',
       'Height',
@@ -44,13 +51,21 @@ describe('People', () => {
   })
 
   it('renders each person name', () => {
-    render(<People people={mockPeople} />)
+    render(
+      <MemoryRouter>
+        <People people={mockPeople} />
+      </MemoryRouter>,
+    )
     expect(screen.getByText('Luke Skywalker')).toBeInTheDocument()
     expect(screen.getByText('Leia Organa')).toBeInTheDocument()
   })
 
   it('renders an empty table body when people list is empty', () => {
-    render(<People people={[]} />)
+    render(
+      <MemoryRouter>
+        <People people={[]} />
+      </MemoryRouter>,
+    )
     expect(screen.getAllByRole('row')).toHaveLength(1)
   })
 })

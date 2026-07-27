@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 
 export type PersonType = {
   name: string
@@ -9,21 +9,35 @@ export type PersonType = {
   eye_color: string
   birth_year: string
   gender: string
+  url: string
 }
 
-export class Person extends Component<PersonType> {
-  render() {
-    return (
-      <tr>
-        <th>{this.props.name}</th>
-        <td>{this.props.height}</td>
-        <td>{this.props.mass}</td>
-        <td>{this.props.hair_color}</td>
-        <td>{this.props.skin_color}</td>
-        <td>{this.props.eye_color}</td>
-        <td>{this.props.birth_year}</td>
-        <td>{this.props.gender}</td>
-      </tr>
-    )
-  }
+export const Person = ({
+  name,
+  height,
+  mass,
+  hair_color,
+  skin_color,
+  eye_color,
+  birth_year,
+  gender,
+  url,
+}: PersonType) => {
+  const [searchParams] = useSearchParams()
+  const id = url.split('/').filter(Boolean).pop()
+
+  return (
+    <tr>
+      <th>
+        <Link to={`/details/${id}?${searchParams}`}>{name}</Link>
+      </th>
+      <td>{height}</td>
+      <td>{mass}</td>
+      <td>{hair_color}</td>
+      <td>{skin_color}</td>
+      <td>{eye_color}</td>
+      <td>{birth_year}</td>
+      <td>{gender}</td>
+    </tr>
+  )
 }
