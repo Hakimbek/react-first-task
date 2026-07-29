@@ -3,11 +3,12 @@ import { Home } from './layouts/home/Home.tsx'
 import { About } from './layouts/about/About.tsx'
 import { NotFound } from './layouts/not-found/NotFound.tsx'
 import { Details } from './layouts/details/Details.tsx'
+import { ThemeSwitcher } from './components/theme-switcher/ThemeSwitcher.tsx'
 
 export const App = () => {
   return (
     <>
-      <nav className="bg-light border-bottom p-2">
+      <nav className="bg-body-tertiary border-bottom p-2 d-flex justify-content-between align-items-center">
         <ul className="nav">
           <li className="nav-item">
             <NavLink
@@ -30,6 +31,7 @@ export const App = () => {
             </NavLink>
           </li>
         </ul>
+        <ThemeSwitcher />
       </nav>
 
       <Routes>

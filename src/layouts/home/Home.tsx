@@ -7,7 +7,7 @@ import { getPeople } from '../../services/getPeople.ts'
 import { useState, useEffect } from 'react'
 import { useSearchParams, Outlet } from 'react-router-dom'
 
-export const URL = 'https://swapi.dev/api/people'
+export const URL = 'https://swapi.py4e.com/api/people'
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams()

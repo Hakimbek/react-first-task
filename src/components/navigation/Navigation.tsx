@@ -16,7 +16,7 @@ export const Navigation = ({
   isLoading,
 }: NavigationProps) => {
   return (
-    <div className="container-fluid d-flex gap-3 justify-content-center position-absolute bottom-0 py-3 bg-light border-top">
+    <div className="container-fluid d-flex gap-3 justify-content-center position-absolute bottom-0 py-3 bg-body-tertiary border-top">
       <button
         disabled={!previous || isLoading}
         className="btn btn-primary"
