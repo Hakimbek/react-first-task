@@ -33,7 +33,7 @@ export const Details = () => {
         <Link to={`/?${searchParams}`} className="btn-close" aria-label="Close" />
       </div>
       <table className="table table-bordered">
-        <thead className="table-light">
+        <thead>
           <tr>
             <th scope="col">Height</th>
             <th scope="col">Mass</th>

@@ -28,6 +28,11 @@ export const Person = ({
 
   return (
     <tr>
+      <td scope="col">
+        <div className="d-flex justify-content-center">
+          <input className="form-check-input" type="checkbox" />
+        </div>
+      </td>
       <th>
         <Link to={`/details/${id}?${searchParams}`}>{name}</Link>
       </th>
