@@ -6,7 +6,7 @@ import type { ResultType } from './type.ts'
 import { Component } from 'react'
 import { getPeople } from './services/getPeople.ts'
 
-export const URL = 'https://swapi.dev/api/people'
+export const URL = 'https://swapi.py4e.com/api/people'
 
 type State = {
   search: string
