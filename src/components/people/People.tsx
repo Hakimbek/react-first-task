@@ -13,11 +13,7 @@ export const People = ({ people }: PeopleProps) => {
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">
-                  <div className="d-flex justify-content-center">
-                    <input className="form-check-input" type="checkbox" />
-                  </div>
-                </th>
+                <th scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Height</th>
                 <th scope="col">Mass</th>
