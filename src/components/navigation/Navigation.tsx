@@ -1,4 +1,5 @@
 import { useSelectionStore } from '../../services/useSelectionStore.ts'
+import { downloadCSV, toCSV } from '../../services/downloadCSV.ts'
 
 type NavigationProps = {
   next: null | string
@@ -20,6 +21,14 @@ export const Navigation = ({
   const selected = useSelectionStore((state) => state.selected)
   const clear = useSelectionStore((state) => state.clear)
 
+  const handleDownload = () => {
+    const rows = Array.from(selected.values())
+
+    if (rows.length === 0) return
+
+    downloadCSV(`${selected.size}_items.csv`, toCSV(rows))
+  }
+
   return (
     <>
       <div className="container-fluid d-flex gap-3 justify-content-center position-absolute bottom-0 py-3 bg-body-tertiary border-top">
@@ -38,9 +47,9 @@ export const Navigation = ({
       {selected.size > 0 && (
         <div className="position-absolute bottom-0 end-0 mb-3 me-3 d-flex gap-3">
           <button onClick={clear} className="btn btn-primary">
-            Cancel selection
+            Unselect all
           </button>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={handleDownload}>
             Download
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               {selected.size}

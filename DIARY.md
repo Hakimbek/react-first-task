@@ -28,4 +28,8 @@ Change API endpoint to a new one. Previous one is not working anymore.
 
 Implement light and dark mode toggle. I used a context to manage the theme state and applied conditional styling based on the current theme.
 
-I used bootstrap for styling and it was easy to implement the toggle functionality.
+I used bootstrap for styling, and it was easy to implement the toggle functionality.
+
+### 30.07.2026
+
+Add Zustand for state management.
