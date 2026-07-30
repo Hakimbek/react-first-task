@@ -33,3 +33,7 @@ I used bootstrap for styling, and it was easy to implement the toggle functional
 ### 30.07.2026
 
 Add Zustand for state management.
+
+### 30.07.2026
+
+Add download logic for the list of people.
