@@ -11,8 +11,9 @@ export const People = ({ people }: PeopleProps) => {
       <div className="row">
         <div className="col">
           <table className="table table-bordered">
-            <thead className="table-light">
+            <thead>
               <tr>
+                <th scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Height</th>
                 <th scope="col">Mass</th>

@@ -10,7 +10,7 @@ type SearchProps = {
 
 export const Search = ({ search, isLoading, onChange, onSubmit, onError }: SearchProps) => {
   return (
-    <div className="container-fluid py-4 bg-light border-bottom">
+    <div className="container-fluid py-4 bg-body-tertiary border-bottom">
       <div className="row d-flex justify-content-between">
         <div className="col-5">
           <form className="d-flex gap-2 w-50" onSubmit={onSubmit}>

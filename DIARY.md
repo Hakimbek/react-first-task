@@ -19,3 +19,21 @@ Convert almost all components to functional components.
 ### 27.07.2026
 
 Converting the App component to a functional component was a bit tricky because it has a lot of logic and state management. I had to refactor some parts of the code to make it work properly.
+
+### 29.07.2026
+
+Change API endpoint to a new one. Previous one is not working anymore.
+
+### 29.07.2026
+
+Implement light and dark mode toggle. I used a context to manage the theme state and applied conditional styling based on the current theme.
+
+I used bootstrap for styling, and it was easy to implement the toggle functionality.
+
+### 30.07.2026
+
+Add Zustand for state management.
+
+### 30.07.2026
+
+Add download logic for the list of people.
