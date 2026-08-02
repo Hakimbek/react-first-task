@@ -67,7 +67,7 @@ describe('App', () => {
       </MemoryRouter>,
     )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
-    expect(mockGetPeople).toHaveBeenCalledWith(expect.stringContaining('swapi.dev'))
+    expect(mockGetPeople).toHaveBeenCalledWith(expect.stringContaining('swapi.py4e.com'))
   })
 
   it('renders fetched people in the table', async () => {
