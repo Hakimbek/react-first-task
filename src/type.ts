@@ -1,4 +1,4 @@
-import type { PersonType } from './components/Person.tsx'
+import type { PersonType } from './components/person/Person.tsx'
 
 export type ResultType = {
   count: number
