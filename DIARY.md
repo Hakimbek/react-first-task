@@ -37,3 +37,9 @@ Add Zustand for state management.
 ### 30.07.2026
 
 Add download logic for the list of people.
+
+### 08.08.2026
+
+Install and configure TanStack Query for data fetching and caching.
+
+Configure TTL inside env file.
