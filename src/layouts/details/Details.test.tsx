@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import { Details } from './Details'
 import { getPeople } from '../../services/getPeople'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 jest.mock('../../services/getPeople')
 
@@ -20,13 +21,17 @@ const mockPerson = {
   url: 'https://swapi.dev/api/people/1/',
 }
 
+const createClient = () => new QueryClient({ defaultOptions: { queries: { retry: false } } })
+
 const renderDetails = (id = '1') =>
   render(
-    <MemoryRouter initialEntries={[`/details/${id}`]}>
-      <Routes>
-        <Route path="/details/:id" element={<Details />} />
-      </Routes>
-    </MemoryRouter>,
+    <QueryClientProvider client={createClient()}>
+      <MemoryRouter initialEntries={[`/details/${id}`]}>
+        <Routes>
+          <Route path="/details/:id" element={<Details />} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>,
   )
 
 describe('Details', () => {
@@ -92,12 +97,14 @@ describe('Details', () => {
     }
 
     render(
-      <MemoryRouter initialEntries={['/details/1']}>
-        <NavButton />
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>,
+      <QueryClientProvider client={createClient()}>
+        <MemoryRouter initialEntries={['/details/1']}>
+          <NavButton />
+          <Routes>
+            <Route path="/details/:id" element={<Details />} />
+          </Routes>
+        </MemoryRouter>
+      </QueryClientProvider>,
     )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
 
