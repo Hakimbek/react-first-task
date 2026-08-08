@@ -92,7 +92,7 @@ describe('App', () => {
   it('disables submit and navigation buttons while loading', () => {
     mockGetPeople.mockImplementation(() => new Promise(() => {}))
     renderHome()
-    const [submitButton, , prevButton, nextButton] = screen.getAllByRole('button')
+    const [submitButton, , , prevButton, nextButton] = screen.getAllByRole('button')
     expect(submitButton).toBeDisabled()
     expect(prevButton).toBeDisabled()
     expect(nextButton).toBeDisabled()

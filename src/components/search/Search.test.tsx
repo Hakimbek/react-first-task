@@ -8,6 +8,7 @@ const defaultProps = {
   onChange: jest.fn(),
   onSubmit: jest.fn((e: React.FormEvent<HTMLFormElement>) => e.preventDefault()),
   onError: jest.fn(),
+  onInvalidate: jest.fn(),
 }
 
 describe('Search', () => {
@@ -64,5 +65,12 @@ describe('Search', () => {
     render(<Search {...defaultProps} onError={onError} />)
     await userEvent.click(screen.getByRole('button', { name: /test error/i }))
     expect(onError).toHaveBeenCalledTimes(1)
+  })
+
+  it('calls onInvalidate when Invalidate Cache button is clicked', async () => {
+    const onInvalidate = jest.fn()
+    render(<Search {...defaultProps} onInvalidate={onInvalidate} />)
+    await userEvent.click(screen.getByRole('button', { name: /invalidate cache/i }))
+    expect(onInvalidate).toHaveBeenCalledTimes(1)
   })
 })
