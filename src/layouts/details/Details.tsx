@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react'
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { getPeople } from '../../services/getPeople.ts'
 import { URL } from '../home/Home.tsx'
 import type { PersonType } from '../../components/person/Person.tsx'
+import { useQuery } from '@tanstack/react-query'
 
 export const Details = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
-  const [person, setPerson] = useState<PersonType | null>(null)
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchPerson = async () => {
-      setLoading(true)
-      try {
-        const data = await getPeople<PersonType>(`${URL}/${id}/`)
-        setPerson(data)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchPerson()
-  }, [id])
+  const { data: person, isLoading } = useQuery({
+    queryKey: ['person', id],
+    queryFn: () => getPeople<PersonType>(`${URL}/${id}/`),
+  })
 
-  if (loading) return <p className="p-3">Loading...</p>
+  if (isLoading) return <p className="p-3">Loading...</p>
   if (!person) return null
 
   return (
