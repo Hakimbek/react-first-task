@@ -6,9 +6,17 @@ type SearchProps = {
   onChange: (search: string) => void
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   onError: () => void
+  onInvalidate: () => void
 }
 
-export const Search = ({ search, isLoading, onChange, onSubmit, onError }: SearchProps) => {
+export const Search = ({
+  search,
+  isLoading,
+  onChange,
+  onSubmit,
+  onError,
+  onInvalidate,
+}: SearchProps) => {
   return (
     <div className="container-fluid py-4 bg-body-tertiary border-bottom">
       <div className="row d-flex justify-content-between">
@@ -31,7 +39,10 @@ export const Search = ({ search, isLoading, onChange, onSubmit, onError }: Searc
             </button>
           </form>
         </div>
-        <div className="col-5 d-flex justify-content-end">
+        <div className="col-5 d-flex justify-content-end gap-2">
+          <button className="btn btn-warning" onClick={onInvalidate}>
+            Invalidate Cache
+          </button>
           <button className="btn btn-danger" onClick={onError}>
             Test Error
           </button>

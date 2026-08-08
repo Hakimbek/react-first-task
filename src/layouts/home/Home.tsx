@@ -5,7 +5,7 @@ import type { ResultType } from '../../type.ts'
 import { getPeople } from '../../services/getPeople.ts'
 import { useState } from 'react'
 import { useSearchParams, Outlet } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const URL = 'https://swapi.py4e.com/api/people'
 
@@ -15,6 +15,7 @@ export const Home = () => {
   const search = searchParams.get('search') ?? localStorage.getItem('search') ?? ''
   const page = Number(searchParams.get('page') ?? 1)
 
+  const queryClient = useQueryClient()
   const [searchInput, setSearchInput] = useState<string>(search)
   const [manualError, setManualError] = useState(false)
 
@@ -49,6 +50,8 @@ export const Home = () => {
 
   const handleError = () => setManualError(true)
 
+  const handleInvalidate = () => queryClient.invalidateQueries({ queryKey: ['people'] })
+
   return (
     <>
       <Search
@@ -57,6 +60,7 @@ export const Home = () => {
         onSubmit={handleSubmit}
         onChange={handleSearch}
         onError={handleError}
+        onInvalidate={handleInvalidate}
       />
       <People people={data?.results ?? []} />
       <Outlet />
