@@ -16,8 +16,11 @@ export const Home = () => {
   const page = Number(searchParams.get('page') ?? 1)
 
   const [searchInput, setSearchInput] = useState<string>(search)
+  const [manualError, setManualError] = useState(false)
 
   localStorage.setItem('search', search)
+
+  if (manualError) throw new Error('Error')
 
   const params = new URLSearchParams({ search, page: String(page) })
 
@@ -44,9 +47,7 @@ export const Home = () => {
     setSearchParams({ search, page: String(page - 1) })
   }
 
-  const handleError = () => {
-    throw new Error('Error')
-  }
+  const handleError = () => setManualError(true)
 
   return (
     <>
