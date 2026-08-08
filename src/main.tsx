@@ -9,7 +9,13 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import App from './App.tsx'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Number(import.meta.env.VITE_QUERY_TTL ?? 60000),
+    },
+  },
+})
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
