@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
 import { NotFound } from './NotFound'
 
-const renderNotFound = () => render(<NotFound />, { wrapper: MemoryRouter })
+const renderNotFound = () => render(<NotFound />)
 
 describe('NotFound', () => {
   it('renders the 404 heading', () => {

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export const About = () => {
   return (
@@ -11,7 +11,7 @@ export const About = () => {
         to complex engineering. Combined with an Upper-Intermediate (B2) English proficiency, I
         focus on writing clean, scalable code and delivering high-quality digital experiences.
       </p>
-      <Link to="https://rs.school/" className="fs-3" target="_blank">
+      <Link href="https://rs.school/" className="fs-3" target="_blank">
         RS School
       </Link>
     </div>

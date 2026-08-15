@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
 import { Person, type PersonType } from './Person'
 
 const mockPerson: PersonType = {
@@ -16,13 +15,11 @@ const mockPerson: PersonType = {
 
 const renderPerson = (props: PersonType) =>
   render(
-    <MemoryRouter>
-      <table>
-        <tbody>
-          <Person {...props} />
-        </tbody>
-      </table>
-    </MemoryRouter>,
+    <table>
+      <tbody>
+        <Person {...props} />
+      </tbody>
+    </table>,
   )
 
 describe('Person', () => {

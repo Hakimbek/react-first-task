@@ -1,9 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom'
-import userEvent from '@testing-library/user-event'
 import { Details } from './Details'
 import { getPeople } from '../../services/getPeople'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useParams, useSearchParams } from 'next/navigation'
 
 jest.mock('../../services/getPeople')
 
@@ -23,20 +22,18 @@ const mockPerson = {
 
 const createClient = () => new QueryClient({ defaultOptions: { queries: { retry: false } } })
 
-const renderDetails = (id = '1') =>
+const renderDetails = (client = createClient()) =>
   render(
-    <QueryClientProvider client={createClient()}>
-      <MemoryRouter initialEntries={[`/details/${id}`]}>
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
-      </MemoryRouter>
+    <QueryClientProvider client={client}>
+      <Details />
     </QueryClientProvider>,
   )
 
 describe('Details', () => {
   beforeEach(() => {
     mockGetPeople.mockResolvedValue(mockPerson)
+    ;(useParams as jest.Mock).mockReturnValue({ id: '1' })
+    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
   })
 
   afterEach(() => {
@@ -50,7 +47,7 @@ describe('Details', () => {
   })
 
   it('fetches person by id on mount', async () => {
-    renderDetails('1')
+    renderDetails()
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
     expect(mockGetPeople).toHaveBeenCalledWith(expect.stringContaining('/1/'))
   })
@@ -91,24 +88,17 @@ describe('Details', () => {
   })
 
   it('refetches when id changes', async () => {
-    const NavButton = () => {
-      const navigate = useNavigate()
-      return <button onClick={() => navigate('/details/2')}>Go to 2</button>
-    }
-
-    render(
-      <QueryClientProvider client={createClient()}>
-        <MemoryRouter initialEntries={['/details/1']}>
-          <NavButton />
-          <Routes>
-            <Route path="/details/:id" element={<Details />} />
-          </Routes>
-        </MemoryRouter>
-      </QueryClientProvider>,
-    )
+    ;(useParams as jest.Mock).mockReturnValue({ id: '1' })
+    const client = createClient()
+    const { rerender } = renderDetails(client)
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
 
-    await userEvent.click(screen.getByRole('button', { name: 'Go to 2' }))
+    ;(useParams as jest.Mock).mockReturnValue({ id: '2' })
+    rerender(
+      <QueryClientProvider client={client}>
+        <Details />
+      </QueryClientProvider>,
+    )
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(2))
     expect(mockGetPeople).toHaveBeenLastCalledWith(expect.stringContaining('/2/'))
   })

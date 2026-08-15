@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router-dom'
 import { Home } from './Home.tsx'
 import { getPeople } from '../../services/getPeople'
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 jest.mock('../../services/getPeople')
 
@@ -43,20 +43,14 @@ const mockResponse = {
 const createClient = () => new QueryClient({ defaultOptions: { queries: { retry: false } } })
 
 const renderHome = (ui = <Home />) =>
-  render(
-    <QueryClientProvider client={createClient()}>
-      <MemoryRouter>{ui}</MemoryRouter>
-    </QueryClientProvider>,
-  )
+  render(<QueryClientProvider client={createClient()}>{ui}</QueryClientProvider>)
 
 const renderHomeWithBoundary = () =>
   render(
     <QueryClientProvider client={createClient()}>
-      <MemoryRouter>
-        <ErrorBoundary>
-          <Home />
-        </ErrorBoundary>
-      </MemoryRouter>
+      <ErrorBoundary>
+        <Home />
+      </ErrorBoundary>
     </QueryClientProvider>,
   )
 
@@ -64,6 +58,8 @@ describe('App', () => {
   beforeEach(() => {
     mockGetPeople.mockResolvedValue(mockResponse)
     localStorage.clear()
+    ;(useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams())
+    ;(useRouter as jest.Mock).mockReturnValue({ push: jest.fn() })
   })
 
   afterEach(() => {
@@ -106,13 +102,13 @@ describe('App', () => {
     expect(nextButton).not.toBeDisabled()
   })
 
-  it('increments page and refetches when next is clicked', async () => {
+  it('calls router.push with page=2 when next is clicked', async () => {
+    const push = jest.fn()
+    ;(useRouter as jest.Mock).mockReturnValue({ push })
     renderHome()
     await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
-    const buttons = screen.getAllByRole('button')
-    await userEvent.click(buttons[buttons.length - 1])
-    expect(screen.getByText('2')).toBeInTheDocument()
-    await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(2))
+    await userEvent.click(screen.getAllByRole('button').at(-1)!)
+    expect(push).toHaveBeenCalledWith(expect.stringContaining('page=2'))
   })
 
   it('does not refetch when submitting the same search', async () => {
@@ -123,14 +119,14 @@ describe('App', () => {
     expect(mockGetPeople).toHaveBeenCalledTimes(1)
   })
 
-  it('refetches when submitting a new search', async () => {
+  it('calls router.push with search term when submitting a new search', async () => {
+    const push = jest.fn()
+    ;(useRouter as jest.Mock).mockReturnValue({ push })
     renderHome()
     await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(1))
     await userEvent.type(screen.getByRole('searchbox'), 'yoda')
-    const [submitButton] = screen.getAllByRole('button')
-    await userEvent.click(submitButton)
-    await waitFor(() => expect(mockGetPeople).toHaveBeenCalledTimes(2))
-    expect(mockGetPeople).toHaveBeenLastCalledWith(expect.stringContaining('yoda'))
+    await userEvent.click(screen.getAllByRole('button')[0])
+    expect(push).toHaveBeenCalledWith(expect.stringContaining('search=yoda'))
   })
 
   it('saves search to localStorage on fetch', async () => {

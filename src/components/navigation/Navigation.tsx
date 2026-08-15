@@ -1,3 +1,5 @@
+'use client'
+
 import { useSelectionStore } from '../../services/useSelectionStore.ts'
 import { downloadCSV, toCSV } from '../../services/downloadCSV.ts'
 
