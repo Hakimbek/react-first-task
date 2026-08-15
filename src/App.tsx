@@ -20,7 +20,7 @@ export const App = () => {
               Home
             </NavLink>
           </li>
-          <li className="nav">
+          <li className="nav-item">
             <NavLink
               to="/about"
               className={({ isActive }) =>
