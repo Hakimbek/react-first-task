@@ -43,3 +43,7 @@ Add download logic for the list of people.
 Install and configure TanStack Query for data fetching and caching.
 
 Configure TTL inside env file.
+
+### 16.08.2026
+
+Install and setup Next.js for server-side rendering and routing.
