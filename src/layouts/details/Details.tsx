@@ -1,7 +1,8 @@
 'use client'
 
 import { useParams, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '../../i18n/navigation.ts'
 import { getPeople } from '../../services/getPeople.ts'
 import { API_URL } from '../home/Home.tsx'
 import type { PersonType } from '../../components/person/Person.tsx'
@@ -10,6 +11,8 @@ import { useQuery } from '@tanstack/react-query'
 export const Details = () => {
   const { id } = useParams<{ id: string }>()
   const searchParams = useSearchParams()
+  const tDetails = useTranslations('details')
+  const tPeople = useTranslations('people')
 
   const {
     data: person,
@@ -20,8 +23,8 @@ export const Details = () => {
     queryFn: () => getPeople<PersonType>(`${API_URL}/${id}/`),
   })
 
-  if (isLoading) return <p className="p-3">Loading...</p>
-  if (isError) return <p className="p-3 text-danger">Failed to load details.</p>
+  if (isLoading) return <p className="p-3">{tDetails('loading')}</p>
+  if (isError) return <p className="p-3 text-danger">{tDetails('error')}</p>
   if (!person) return null
 
   return (
@@ -33,13 +36,13 @@ export const Details = () => {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th scope="col">Height</th>
-            <th scope="col">Mass</th>
-            <th scope="col">Hair color</th>
-            <th scope="col">Skin color</th>
-            <th scope="col">Eye color</th>
-            <th scope="col">Birth year</th>
-            <th scope="col">Gender</th>
+            <th scope="col">{tPeople('height')}</th>
+            <th scope="col">{tPeople('mass')}</th>
+            <th scope="col">{tPeople('hairColor')}</th>
+            <th scope="col">{tPeople('skinColor')}</th>
+            <th scope="col">{tPeople('eyeColor')}</th>
+            <th scope="col">{tPeople('birthYear')}</th>
+            <th scope="col">{tPeople('gender')}</th>
           </tr>
         </thead>
         <tbody>
