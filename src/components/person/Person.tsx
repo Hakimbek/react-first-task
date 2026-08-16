@@ -1,5 +1,8 @@
-import { Link, useSearchParams } from 'react-router-dom'
-import { useSelectionStore } from '../../services/useSelectionStore'
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+import { Link } from '../../i18n/navigation.ts'
+import { useSelectionStore } from '../../services/useSelectionStore.ts'
 
 export type PersonType = {
   name: string
@@ -15,7 +18,7 @@ export type PersonType = {
 
 export const Person = (person: PersonType) => {
   const { name, height, mass, hair_color, skin_color, eye_color, birth_year, gender, url } = person
-  const [searchParams] = useSearchParams()
+  const searchParams = useSearchParams()
   const id = url.split('/').filter(Boolean).pop()
 
   const selected = useSelectionStore((state) => state.selected.has(url))
@@ -34,7 +37,7 @@ export const Person = (person: PersonType) => {
         </div>
       </td>
       <th>
-        <Link to={`/details/${id}?${searchParams}`}>{name}</Link>
+        <Link href={`/details/${id}?${searchParams}`}>{name}</Link>
       </th>
       <td>{height}</td>
       <td>{mass}</td>

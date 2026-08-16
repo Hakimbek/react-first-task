@@ -1,3 +1,6 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import { useSelectionStore } from '../../services/useSelectionStore.ts'
 import { downloadCSV, toCSV } from '../../services/downloadCSV.ts'
 
@@ -18,6 +21,7 @@ export const Navigation = ({
   onPrev,
   isLoading,
 }: NavigationProps) => {
+  const t = useTranslations('navigation')
   const selected = useSelectionStore((state) => state.selected)
   const clear = useSelectionStore((state) => state.clear)
 
@@ -47,10 +51,10 @@ export const Navigation = ({
       {selected.size > 0 && (
         <div className="position-absolute bottom-0 end-0 mb-3 me-3 d-flex gap-3">
           <button onClick={clear} className="btn btn-primary">
-            Unselect all
+            {t('unselectAll')}
           </button>
           <button className="btn btn-primary" onClick={handleDownload}>
-            Download
+            {t('download')}
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               {selected.size}
               <span className="visually-hidden">unread messages</span>

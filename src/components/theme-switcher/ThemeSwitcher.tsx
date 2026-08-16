@@ -1,3 +1,5 @@
+'use client'
+
 import { useTheme } from '../theme/ThemeContext.tsx'
 
 export const ThemeSwitcher = () => {

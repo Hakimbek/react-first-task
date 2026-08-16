@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Spinner } from '../spinner/Spinner.tsx'
 
 type SearchProps = {
@@ -17,6 +18,8 @@ export const Search = ({
   onError,
   onInvalidate,
 }: SearchProps) => {
+  const t = useTranslations('search')
+
   return (
     <div className="container-fluid py-4 bg-body-tertiary border-bottom">
       <div className="row d-flex justify-content-between">
@@ -28,7 +31,7 @@ export const Search = ({
               onChange={(e) => onChange(e.target.value)}
               value={search}
               className="form-control"
-              placeholder="Search..."
+              placeholder={t('placeholder')}
             />
             <button
               type="submit"
@@ -41,10 +44,10 @@ export const Search = ({
         </div>
         <div className="col-5 d-flex justify-content-end gap-2">
           <button className="btn btn-warning" onClick={onInvalidate}>
-            Invalidate Cache
+            {t('invalidateCache')}
           </button>
           <button className="btn btn-danger" onClick={onError}>
-            Test Error
+            {t('testError')}
           </button>
         </div>
       </div>

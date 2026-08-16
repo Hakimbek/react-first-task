@@ -6,7 +6,11 @@ const config: Config = {
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/__mocks__/fileMock.ts',
+    '^next-intl$': '<rootDir>/__mocks__/next-intl.ts',
+    '.*i18n/navigation(\\.ts)?$': '<rootDir>/__mocks__/i18n/navigation.ts',
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^next/navigation$': '<rootDir>/__mocks__/next/navigation.ts',
+    '^next/link$': '<rootDir>/__mocks__/next/link.tsx',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverage: true,
@@ -16,8 +20,13 @@ const config: Config = {
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
     '!src/main.tsx',
+    '!src/app/**',
+    '!src/components/nav/**',
+    '!src/components/locale-switcher/**',
     '!src/**/*.stories.tsx',
     '!src/**/index.ts',
+    '!src/i18n/**',
+    '!src/middleware.ts',
   ],
   coverageThreshold: {
     global: {

@@ -1,3 +1,5 @@
+'use client'
+
 import type { ThemeContextType, Theme } from './theme.ts'
 import { createContext, useState, useEffect, useContext } from 'react'
 import { getInitialTheme } from '../../services/getTheme.ts'
