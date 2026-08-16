@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Details } from '../../../layouts/details/Details.tsx'
+import { Details } from '../../../../layouts/details/Details.tsx'
 
 export default function DetailsPage() {
   return (
