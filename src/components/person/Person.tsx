@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { Link } from '../../i18n/navigation.ts'
 import { useSelectionStore } from '../../services/useSelectionStore.ts'
 
 export type PersonType = {

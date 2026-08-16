@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Person } from '../person/Person.tsx'
 import type { PersonType } from '../person/Person.tsx'
 
@@ -6,6 +7,8 @@ type PeopleProps = {
 }
 
 export const People = ({ people }: PeopleProps) => {
+  const t = useTranslations('people')
+
   return (
     <div className="container-fluid mt-4">
       <div className="row">
@@ -14,14 +17,14 @@ export const People = ({ people }: PeopleProps) => {
             <thead>
               <tr>
                 <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Height</th>
-                <th scope="col">Mass</th>
-                <th scope="col">Hair color</th>
-                <th scope="col">Skin color</th>
-                <th scope="col">Eye color</th>
-                <th scope="col">Birth year</th>
-                <th scope="col">Gender</th>
+                <th scope="col">{t('name')}</th>
+                <th scope="col">{t('height')}</th>
+                <th scope="col">{t('mass')}</th>
+                <th scope="col">{t('hairColor')}</th>
+                <th scope="col">{t('skinColor')}</th>
+                <th scope="col">{t('eyeColor')}</th>
+                <th scope="col">{t('birthYear')}</th>
+                <th scope="col">{t('gender')}</th>
               </tr>
             </thead>
             <tbody>
