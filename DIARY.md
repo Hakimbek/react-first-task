@@ -55,3 +55,7 @@ Add internalization support for multiple languages using next-intl.
 ### 16.08.2026
 
 Statically Generate About page with Next.js. I used getStaticProps to fetch data at build time.
+
+### 24.08.2026
+
+Install `@google/genai` and implement AI explanation feature.
