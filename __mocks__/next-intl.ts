@@ -17,6 +17,17 @@ const messages: Record<string, Record<string, string>> = {
   },
   navigation: { unselectAll: 'Unselect all', download: 'Download' },
   details: { loading: 'Loading...', error: 'Failed to load details.' },
+  ai: {
+    explain: 'Explain this item with AI',
+    regenerate: 'Regenerate explanation',
+    loading: 'Generating explanation...',
+    disclaimer: 'AI-generated content may be inaccurate.',
+    retry: 'Try again',
+    error_not_configured: 'AI service is not available.',
+    error_quota_exceeded: 'AI quota exceeded. Please try again later.',
+    error_empty_response: 'No explanation was generated. Please try again.',
+    error_unknown: 'Failed to generate explanation. Please try again.',
+  },
   error: { somethingWentWrong: 'Something went wrong' },
   notFound: { title: '404', message: 'Page not found.', goHome: 'Go back home' },
   about: {

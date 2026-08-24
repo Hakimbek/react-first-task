@@ -7,6 +7,7 @@ import { getPeople } from '../../services/getPeople.ts'
 import { API_URL } from '../home/Home.tsx'
 import type { PersonType } from '../../components/person/Person.tsx'
 import { useQuery } from '@tanstack/react-query'
+import { AiExplanation } from '../../components/ai-explanation/AiExplanation.tsx'
 
 export const Details = () => {
   const { id } = useParams<{ id: string }>()
@@ -57,6 +58,7 @@ export const Details = () => {
           </tr>
         </tbody>
       </table>
+      <AiExplanation person={person} />
     </div>
   )
 }

@@ -11,6 +11,8 @@ const config: Config = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^next/navigation$': '<rootDir>/__mocks__/next/navigation.ts',
     '^next/link$': '<rootDir>/__mocks__/next/link.tsx',
+    '^server-only$': '<rootDir>/__mocks__/server-only.ts',
+    '^@google/genai$': '<rootDir>/__mocks__/@google/genai.ts',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverage: true,

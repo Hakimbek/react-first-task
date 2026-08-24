@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useParams, useSearchParams } from 'next/navigation'
 
 jest.mock('../../services/getPeople')
+jest.mock('../../components/ai-explanation/AiExplanation', () => ({
+  AiExplanation: () => <div data-testid="ai-explanation" />,
+}))
 
 const mockGetPeople = getPeople as jest.MockedFunction<typeof getPeople>
 
@@ -85,6 +88,12 @@ describe('Details', () => {
     renderDetails()
     await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
     expect(screen.getByRole('link', { name: /close/i })).toBeInTheDocument()
+  })
+
+  it('renders the AI explanation component after data loads', async () => {
+    renderDetails()
+    await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
+    expect(screen.getByTestId('ai-explanation')).toBeInTheDocument()
   })
 
   it('refetches when id changes', async () => {

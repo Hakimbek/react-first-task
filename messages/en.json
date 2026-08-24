@@ -34,6 +34,17 @@
     "message": "Page not found.",
     "goHome": "Go back home"
   },
+  "ai": {
+    "explain": "Explain this item with AI",
+    "regenerate": "Regenerate explanation",
+    "loading": "Generating explanation...",
+    "disclaimer": "AI-generated content may be inaccurate.",
+    "retry": "Try again",
+    "error_not_configured": "AI service is not available.",
+    "error_quota_exceeded": "AI quota exceeded. Please try again later.",
+    "error_empty_response": "No explanation was generated. Please try again.",
+    "error_unknown": "Failed to generate explanation. Please try again."
+  },
   "about": {
     "bio": "I am a Frontend Developer from Uzbekistan with a background in Economics and a deep passion for building polished, user-centric web applications. My journey began during my university years, inspired by the innovation of Silicon Valley to transition from self-taught HTML/CSS to complex engineering. Combined with an Upper-Intermediate (B2) English proficiency, I focus on writing clean, scalable code and delivering high-quality digital experiences."
   }
