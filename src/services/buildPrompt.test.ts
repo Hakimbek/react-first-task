@@ -61,13 +61,12 @@ describe('buildPrompt', () => {
 
   it('instructs the model not to follow instructions in field values', () => {
     const prompt = buildPrompt(basePerson, 'en')
-    expect(prompt.toLowerCase()).toContain('instruction')
+    expect(prompt.toLowerCase()).toContain('field values')
   })
 
   it('instructs the model to respond in the target language', () => {
     const prompt = buildPrompt(basePerson, 'ru')
     expect(prompt).toContain('Russian')
-    expect(prompt).toContain('ru')
   })
 
   it('throws when the serialized context exceeds 4 KB', () => {

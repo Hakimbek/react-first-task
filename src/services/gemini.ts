@@ -3,7 +3,7 @@ import { GoogleGenAI } from '@google/genai'
 import { buildPrompt, type PersonInput } from './buildPrompt.ts'
 
 const DEFAULT_MODEL = 'gemini-2.0-flash'
-const MAX_OUTPUT_TOKENS = 512
+const MAX_OUTPUT_TOKENS = 1024
 
 /**
  * Calls the Gemini API and returns a plain-text explanation.
